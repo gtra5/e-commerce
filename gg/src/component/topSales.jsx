@@ -15,7 +15,7 @@ function TopSales() {
       fetch(`https://dummyjson.com/products/category/${activeHeader}`)
         .then((res) => res.json())
         .then((data) => {
-          setProducts(data.products.slice(0, 10))
+          setProducts(data.products.slice(0, 12)) // Limit to 12 products
           setLoading(false)
         })
         .catch((error) => {
@@ -55,7 +55,7 @@ function TopSales() {
   const renderCards = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="bg-card text-card-foreground p-6 rounded-lg shadow-sm animate-pulse">
               <div className="w-full h-32 bg-muted rounded mb-4"></div>
@@ -69,14 +69,14 @@ function TopSales() {
     }
 
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-6">
         {products.map((product) => {
           const discountedPrice = getDiscountedPrice(product.price, product.discountPercentage)
           return (
             <div
               key={product.id}
               onClick={() => navigate(`/details/${product.id}`)}
-              className="bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg rounded-b-2xl p-4 flex flex-col font-montserrat hover:shadow-xl transition-shadow cursor-pointer"
+              className="bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg rounded-b-2xl p-6 flex flex-col font-montserrat hover:shadow-xl transition-shadow cursor-pointer"
             >
               <div className="relative overflow-hidden rounded-lg mb-4 aspect-square bg-gray-50">
                 <img
@@ -99,7 +99,7 @@ function TopSales() {
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg font-bold text-gray-900">{formatPrice(discountedPrice)}</span>
                 {product.discountPercentage > 0 && (
-                  <span className="text-xs text-gray-500 line-through">{formatPrice(product.price)}</span>
+                  <span className="text-xs text-gray-500 line-through">{Math.ceil(product.price)}</span>
                 )}
               </div>
               <div className="text-xs text-gray-600">Only {product.stock} left in stock</div>
@@ -114,9 +114,9 @@ function TopSales() {
     <div className="px-4 py-6 bg-white">
       <h1 className="text-2xl font-bold mb-4">Trending Products</h1>
 
-      <div className="flex space-x-2 overflow-x-auto scrollbar-hide mb-8">
+  <div className="flex space-x-2 overflow-x-auto custom-scrollbar mb-4">
         {categories.map((category) => (
-          <div key={category} className="inline-block">
+          <div key={category} className="inline-block p-2 md:p-0">
             {/* Mobile enhanced button */}
             <button
               key={`${category}-mobile`}
