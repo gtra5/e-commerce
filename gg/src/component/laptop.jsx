@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { LaptopMinimal, Star, Eye, ShoppingCart, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ProductGridSkeleton } from "./Skeleton";
+
 function Laptops() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     setError(null);
 
     const fetchlaptops = async () => {
@@ -30,13 +30,10 @@ function Laptops() {
         } else {
           setProducts(LaptopProducts);
         }
-
-        setLoading(false);
       } catch (error) {
         console.error("Error loading smartphone products:", error);
         setProducts([]);
         setError(error.message);
-        setLoading(false);
       }
     };
     fetchlaptops();
@@ -72,12 +69,8 @@ function Laptops() {
     ));
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-lg text-gray-600">Loading laptops products...</div>
-      </div>
-    );
+  if (products.length === 0 && !error) {
+    return <ProductGridSkeleton count={8} />;
   }
 
   if (error) {
@@ -164,7 +157,7 @@ function Laptops() {
 
             return (
               <div
-                className="bg-white shadow-lg hover:shadow-2xl p-3 sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-full group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[240px] md:h-100"
+                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[300px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
               >

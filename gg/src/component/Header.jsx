@@ -1,18 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 
 const categories = [
-  "Electronics",
-  "Fashion",
-  "Home",
-  "Beauty",
-  "Sports",
-  "Phones",
-  "Groceries",
-  "Appliances",
-  "Gaming",
-  "More",
+  {
+    name: "Electronics",
+    links: "/eletronics",
+  },
+  { name: "Fashion", links: "/Fashion" },
+  { name: "Home", links: "/eletronics" },
+  { name: "Beauty", links: "/eletronics" },
+  { name: "Sports", links: "/eletronics" },
+  { name: "Phones", links: "/eletronics" },
+  { name: "Groceries", links: "/eletronics" },
+  { name: "Appliances", links: "/eletronics" },
+  { name: "Gaming", links: "/eletronics" },
+  { name: "More", links: "/eletronics" },
 ];
 
 // Popular search terms
@@ -562,17 +567,20 @@ const Header = () => {
             onClick={() => navigate("/cart")}
           >
             <svg
-              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-shopping-cart-icon lucide-shopping-cart"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"
-              />
+              <circle cx="8" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
             </svg>
             <span>Cart</span>
             {cartCount > 0 && (
@@ -682,17 +690,20 @@ const Header = () => {
               onClick={() => navigate("/cart")}
             >
               <svg
-                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                viewBox="0 0 24 24"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-shopping-cart-icon lucide-shopping-cart"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"
-                />
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
               </svg>
               <span>Cart</span>
               {cartCount > 0 && (
@@ -711,10 +722,10 @@ const Header = () => {
           {categories.map((cat) => (
             <li key={cat}>
               <a
-                href="#"
+                href={cat.links}
                 className="text-base font-medium text-gray-600 hover:text-blue-600 transition-colors duration-200 px-2 md:px-3 py-1 rounded hover:bg-blue-50"
               >
-                {cat}
+                {cat.name}
               </a>
             </li>
           ))}

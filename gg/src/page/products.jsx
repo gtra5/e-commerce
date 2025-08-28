@@ -1,451 +1,185 @@
-import React from "react";
-import img1 from "../assets/nischal-kanishk-iuAGCwoY2YA-unsplash (1).jpg";
-import img2 from "../assets/angela-bailey-tuJtzghMuEw-unsplash.jpg";
-import img3 from "../assets/kelly-sikkema-xp-ND7NjWaA-unsplash.jpg";
-import img4 from "../assets/katsia-jazwinska-d9pMephsLKs-unsplash.jpg";
-import img5 from "../assets/kin-shing-lai-999xEzwi7oA-unsplash.jpg";
-import img6 from "../assets/daniel-norris-ZN_86cZrSN0-unsplash.jpg";
-import img7 from "../assets/charlies-x-kZWXHwOd4-k-unsplash.jpg";
-import img8 from "../assets/odd-fellow-HYnUI_TyFEY-unsplash.jpg";
-import img9 from "../assets/engin-akyurt-J4Poo0r0qEk-unsplash.jpg";
-import img10 from "../assets/claire-abdo-aWLTXw6kbDw-unsplash.jpg";
-import img11 from "../assets/wander-fleur-fSN3Q_imqrA-unsplash.jpg";
-import img12 from "../assets/tamara-bellis-mNZ-GvOQUUY-unsplash.jpg";
-import img13 from "../assets/pexels-craytive-1456706.jpg";
-import img14 from "../assets/dress.jpg";
-import img15 from "../assets/knits.jpg";
-import img16 from "../assets/jacket.jpg";
-import img17 from "../assets/jewelry.jpg";
-import img18 from "../assets/pot.jpg";
-import img19 from "../assets/tomato.jpg";
-import img20 from "../assets/decor.jpg";
-import img21 from "../assets/pillow.jpg";
-import img22 from "../assets/dinning.jpg";
-import img23 from "../assets/home2.jpg";
-import img24 from "../assets/kitchen.jpg";
-import img25 from "../assets/skincare.jpg";
-import img26 from "../assets/basket.jpg";
-import img27 from "../assets/hadwares.jpg";
-import img28 from "../assets/funitures.jpg";
-import img29 from "../assets/walpaper.jpg";
+import { useState, useEffect } from "react";
+import Skeleton from "../component/Skeleton";
 
 function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "https://dummyjson.com/products/category/mobile-accessories"
+        );
+        const data = await response.json();
+        // Get first 6 products for our 3 sections (2 products each)
+        setProducts(data.products.slice(0, 6));
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (products.length === 0) {
+    return (
+      <div className="grid bg-[#F5F7F8] rounded-2xl font-sans w-full min-h-[200px] gap-4 grid-cols-1 md:grid-cols-3 xl:min-h-[300px]">
+        <div className="rounded-2xl bg-gradient-to-r from-orange-600 to-orange-700 p-4">
+          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
+            <div className="flex-1 text-center lg:text-left">
+              <Skeleton className="h-6 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/2 mb-3" />
+              <Skeleton className="h-8 w-20 rounded-full" />
+            </div>
+            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
+          </div>
+        </div>
+        <div className="rounded-2xl bg-gradient-to-r from-green-600 to-green-700 p-4">
+          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
+            <div className="flex-1 text-center lg:text-left">
+              <Skeleton className="h-6 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/2 mb-3" />
+              <Skeleton className="h-8 w-20 rounded-full" />
+            </div>
+            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
+          </div>
+        </div>
+        <div className="rounded-2xl bg-gradient-to-r from-gray-700 to-black p-4">
+          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
+            <div className="flex-1 text-center lg:text-left">
+              <Skeleton className="h-6 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/2 mb-3" />
+              <Skeleton className="h-8 w-20 rounded-full" />
+            </div>
+            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Mobile: side-scrollable, Desktop: grid
   return (
-    <div className="hidden md:grid bg-[#F5F7F8] rounded-none font-montserrat w-full min-h-screen  shadow-md px-4 py-4 gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:rounded-2xl">
-      <div className="bg-white shadow-md p-4 rounded-xl flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Get your games here
-        </h2>
-        <img
-          src={img1}
-          alt=""
-          className="w-full h-fit-content object-cover rounded-lg mb-3"
-        />
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          Shop now
-        </a>
+    <div className="w-full">
+      {/* Mobile: side-scrollable */}
+      <div className="flex  gap-4 overflow-x-auto scrollbar-hide px-1 py-2 sm:hidden">
+        {[0, 2, 4].map((start, idx) => (
+          <div
+            key={idx}
+            className="min-w-[85vw] max-w-[90vw] rounded-2xl bg-gradient-to-r p-4"
+            style={{
+              background:
+                idx === 0
+                  ? "linear-gradient(to right, #ea580c, #c2410c)"
+                  : idx === 1
+                  ? "linear-gradient(to right, #16a34a, #166534)"
+                  : "linear-gradient(to right, #374151, #000)",
+            }}
+          >
+            {products.slice(start, start + 1).map((product) => (
+              <div
+                key={product.id}
+                className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col items-center gap-3 h-full"
+              >
+                <div className="flex-1 text-center">
+                  <h3 className="text-base font-semibold line-clamp-2">
+                    {product.title}
+                  </h3>
+                  <p className="text-sm opacity-90 mt-1">${product.price}</p>
+                  <button className="bg-black text-white hover:bg-gray-800 text-sm px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                    Shop Now
+                  </button>
+                </div>
+                <img
+                  src={product.thumbnail || "/placeholder.svg"}
+                  alt={product.title}
+                  className="w-full h-32 object-cover rounded flex-shrink-0"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Acquire home necessities
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img2}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Home Decor</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img3}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Cleaning Tools</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img4}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Home Storage</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img5}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Beddings</p>
-          </div>
-        </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          Discover more in Home
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Household kitchen equipment
-        </h2>
-        <div className="mb-3">
-          <img
-            src={img6}
-            alt=""
-            className="w-full h-32 object-cover rounded-lg mb-2"
-          />
-          <p className="text-sm text-gray-600">Blender</p>
-        </div>
-        <div className="grid grid-cols-3 gap-2 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img7}
-              alt=""
-              className="w-full h-20 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs text-gray-600">Coffee</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img8}
-              alt=""
-              className="w-full h-20 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs text-gray-600">Pots</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img9}
-              alt=""
-              className="w-full h-20 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs text-gray-600">Kettle</p>
-          </div>
-        </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          Discover more in Home
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Affordable Fashion Finds
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img10}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Jeans under $50</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img11}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Tops under $50</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img12}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Dress under $50</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img13}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Shoes under $50</p>
-          </div>
-        </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          See all deals
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Fast fashion with sustainable choices
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img14}
-              alt="Dresses"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
+      {/* Desktop: grid */}
+      <div className="hidden sm:grid bg-[#F5F7F8] rounded-2xl font-sans w-full min-h-[200px] gap-4 grid-cols-1 md:grid-cols-3 xl:min-h-[300px]">
+        {/* First Section - Orange Gradient */}
+        <div className="rounded-2xl bg-gradient-to-r from-orange-600 to-orange-700 p-4">
+          {products.slice(0, 1).map((product) => (
             <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
+              key={product.id}
+              className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full"
             >
-              Image not available
+              <div className="flex-1 text-center lg:text-left">
+                <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold line-clamp-2">
+                  {product.title}
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
+                  ${product.price}
+                </p>
+                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                  Shop Now
+                </button>
+              </div>
+              <img
+                src={product.thumbnail || "/placeholder.svg"}
+                alt={product.title}
+                className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 object-cover rounded flex-shrink-0"
+              />
             </div>
-            <p className="text-xs sm:text-sm text-gray-600">Dresses</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img15}
-              alt="Knits"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Knits</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img16}
-              alt="Jackets"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Jackets</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img17}
-              alt="Jewelry"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Jewelry</p>
-          </div>
+          ))}
         </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          See all deals
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Affordable Home Freshness
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img18}
-              alt="Kitchen & dining"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
+        {/* Second Section - Green Gradient */}
+        <div className="rounded-2xl bg-gradient-to-r from-green-600 to-green-700 p-4">
+          {products.slice(2, 3).map((product) => (
             <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
+              key={product.id}
+              className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full"
             >
-              Image not available
+              <div className="flex-1 text-center lg:text-left">
+                <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold line-clamp-2">
+                  {product.title}
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
+                  ${product.price}
+                </p>
+                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                  Shop Now
+                </button>
+              </div>
+              <img
+                src={product.thumbnail || "/placeholder.svg"}
+                alt={product.title}
+                className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 object-cover rounded flex-shrink-0"
+              />
             </div>
-            <p className="text-xs sm:text-sm text-gray-600">Kitchen & dining</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img19}
-              alt="Home Improvement"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Home Improvement</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img20}
-              alt="Décor"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Décor</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img21}
-              alt="Bedding & Bath"
-              className="w-full h-24 object-cover rounded-lg mb-1 bg-gray-200"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div
-              className="w-full h-24 bg-gray-200 rounded-lg mb-1 flex items-center justify-center text-xs text-gray-500"
-              style={{ display: "none" }}
-            >
-              Image not available
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600">Bedding & Bath</p>
-          </div>
+          ))}
         </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          Shop the latest from Home
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Renew your home
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img22}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Dinning</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img23}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Home</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img24}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Kitchen</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img25}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Skincare</p>
-          </div>
+        {/* Third Section - Gray to Black Gradient */}
+        <div className="rounded-2xl bg-gradient-to-r from-gray-700 to-black p-4">
+          {products.slice(4, 5).map((product) => (
+            <div
+              key={product.id}
+              className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full"
+            >
+              <div className="flex-1 text-center lg:text-left">
+                <h3 className="text-sm md:text-base lg:text-lg xl:text-xl font-semibold line-clamp-2">
+                  {product.title}
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
+                  ${product.price}
+                </p>
+                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                  Shop Now
+                </button>
+              </div>
+              <img
+                src={product.thumbnail || "/placeholder.svg"}
+                alt={product.title}
+                className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 object-cover rounded flex-shrink-0"
+              />
+            </div>
+          ))}
         </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          See all deals
-        </a>
-      </div>
-      <div className="bg-white rounded-xl shadow-md p-4 flex flex-col h-full">
-        <h2 className="font-bold text-lg sm:text-xl text-gray-700 mb-3">
-          Quick refreshes for upscale areas
-        </h2>
-        <div className="grid grid-cols-2 gap-3 mb-3 flex-grow">
-          <div className="flex flex-col">
-            <img
-              src={img28}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Accent furniture</p>
-          </div>
-
-          <div className="flex flex-col">
-            <img
-              src={img27}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Hardware</p>
-          </div>
-          <div className="flex flex-col">
-            <img
-              src={img26}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">Basket & hampers</p>
-          </div>
-
-          <div className="flex flex-col">
-            <img
-              src={img29}
-              alt=""
-              className="w-full h-24 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs sm:text-sm text-gray-600">
-              Wallpaper & Paint
-            </p>
-          </div>
-        </div>
-        <a
-          href="#"
-          className="text-sm text-blue-500 hover:text-blue-700 mt-auto"
-        >
-          See all deals
-        </a>
       </div>
     </div>
   );

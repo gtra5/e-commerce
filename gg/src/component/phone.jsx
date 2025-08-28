@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Smartphone, Star, Eye, ShoppingCart, Clock } from "lucide-react";
+import { ProductGridSkeleton } from "./Skeleton";
 
 function Phone() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     setError(null);
 
     const fetchSmartphones = async () => {
@@ -32,11 +31,9 @@ function Phone() {
         } else {
           setProducts(smartProducts);
         }
-        setLoading(false);
       } catch (error) {
         console.error("Error loading smartphone products:", error);
         setError(error.message);
-        setLoading(false);
       }
     };
     fetchSmartphones();
@@ -53,13 +50,6 @@ function Phone() {
     return price - (price * discountPercentage) / 100;
   };
 
-  const getStockStatus = (stock) => {
-    if (stock <= 5)
-      return { text: "Only few left!", color: "text-red-600 bg-red-50" };
-    if (stock <= 15)
-      return { text: "Limited stock", color: "text-orange-600 bg-orange-50" };
-    return { text: "In stock", color: "text-green-600 bg-green-50" }; // Fixed redundant "Low stock"
-  };
 
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -79,15 +69,6 @@ function Phone() {
     }
   };
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-lg text-gray-600">Loading smartphones...</div>
-      </div>
-    );
-  }
-
   // Error state
   if (error) {
     return (
@@ -98,12 +79,8 @@ function Phone() {
   }
 
   // Empty state
-  if (products.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-lg text-gray-600">No smartphones found</div>
-      </div>
-    );
+  if (products.length === 0 && !error) {
+    return <ProductGridSkeleton count={8} />;
   }
 
   return (
@@ -161,7 +138,7 @@ function Phone() {
           style={{ scrollBehavior: "smooth" }}
         >
           {products.map((product) => {
-            const stockStatus = getStockStatus(product.stock);
+          
             const discountedPrice = getDiscountedPrice(
               product.price,
               product.discountPercentage
@@ -169,7 +146,7 @@ function Phone() {
 
             return (
               <div
-                className="bg-white shadow-lg hover:shadow-2xl p-3 sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-full group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[240px] md-100"
+                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[300px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
               >
@@ -202,18 +179,8 @@ function Phone() {
 
                 {/* Product Info */}
                 <div className="flex-1 flex flex-col">
-                  {/* Stock Status */}
-                  <div
-                    className={`inline-flex items-center gap-1 text-xs font-medium px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full mb-2 w-fit ${stockStatus.color}`}
-                  >
-                    <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    <span className="text-xs sm:text-sm">
-                      {stockStatus.text}
-                    </span>
-                  </div>
-
                   {/* Product Title */}
-                  <h2 className="text-xs sm:text-sm font-semibold text-gray-800 mb-2 line-clamp-2 flex-1 leading-tight lg:text-base">
+                  <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
                     {product.title}
                   </h2>
 

@@ -1,17 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { Car, Star, Eye, ShoppingCart, Clock } from "lucide-react";
+"use client";
+
+import { useEffect, useState, useRef } from "react";
+import { Car, Star, Eye, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+function ProductGridSkeleton() {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div
+          key={i}
+          className="bg-gray-100 animate-pulse rounded-xl h-40 w-full"
+        />
+      ))}
+    </div>
+  );
+}
 
 function Slideproducts() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     setError(null);
 
     // Fetch automotive products from specific categories
@@ -45,13 +57,10 @@ function Slideproducts() {
         } else {
           setProducts(automotiveProducts);
         }
-
-        setLoading(false);
       } catch (error) {
         console.error("Error loading automotive products:", error);
         setProducts([]);
         setError(error.message);
-        setLoading(false);
       }
     };
 
@@ -68,14 +77,6 @@ function Slideproducts() {
     return price - (price * discountPercentage) / 100;
   };
 
-  const getStockStatus = (stock) => {
-    if (stock <= 5)
-      return { text: "Only few left!", color: "text-red-600 bg-red-50" };
-    if (stock <= 15)
-      return { text: "Limited stock", color: "text-orange-600 bg-orange-50" };
-    return { text: "In stock", color: "text-green-600 bg-green-50" }; // Fixed redundant "Low stock"
-  };
-
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -88,14 +89,8 @@ function Slideproducts() {
     ));
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-lg text-gray-600">
-          Loading automotive products...
-        </div>
-      </div>
-    );
+  if (products.length === 0 && !error) {
+    return <ProductGridSkeleton count={8} />;
   }
 
   if (error) {
@@ -124,7 +119,7 @@ function Slideproducts() {
 
   return (
     <div className="relative w-full mx-auto py-4 sm:py-6 font-montserrat">
-      <div className="bg-gradient-to-r from-gray-700 to-black rounded-t-none shadow-lg flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center md:rounded-t-2xl md:justify-between">
+      <div className="bg-gradient-to-r from-gray-700 to-black rounded-t-none  flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center md:rounded-t-2xl md:justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
             <Car className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
@@ -155,7 +150,7 @@ function Slideproducts() {
           aria-label="Scroll left"
         >
           <svg
-            className="w-5 h-5 sm:w-7 sm:h-7"
+            className="h-6 w-6"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
@@ -176,7 +171,6 @@ function Slideproducts() {
           style={{ scrollBehavior: "smooth" }}
         >
           {products.map((product) => {
-            const stockStatus = getStockStatus(product.stock);
             const discountedPrice = getDiscountedPrice(
               product.price,
               product.discountPercentage
@@ -184,7 +178,7 @@ function Slideproducts() {
 
             return (
               <div
-                className="bg-white shadow-lg hover:shadow-2xl p-3 sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-full group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[240px]"
+                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[300px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
               >
@@ -217,18 +211,8 @@ function Slideproducts() {
 
                 {/* Product Info */}
                 <div className="flex-1 flex flex-col">
-                  {/* Stock Status */}
-                  <div
-                    className={`inline-flex items-center gap-1 text-xs font-medium px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full mb-2 w-fit ${stockStatus.color}`}
-                  >
-                    <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    <span className="text-xs sm:text-sm">
-                      {stockStatus.text}
-                    </span>
-                  </div>
-
                   {/* Product Title */}
-                  <h2 className="text-xs sm:text-sm font-semibold text-gray-800 mb-2 line-clamp-2 flex-1 leading-tight lg:text-base">
+                  <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
                     {product.title}
                   </h2>
 
@@ -271,7 +255,7 @@ function Slideproducts() {
           aria-label="Scroll right"
         >
           <svg
-            className="w-5 h-5 sm:w-7 sm:h-7"
+            className="h-6 w-6"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}

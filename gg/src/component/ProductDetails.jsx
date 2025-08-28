@@ -3,19 +3,18 @@ import { useParams } from "react-router-dom";
 import { Star, ShoppingCart, Eye } from "lucide-react";
 import Layout from "../result";
 import { useCart } from "../context/CartContext.jsx";
+import Skeleton from "./Skeleton";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { addItem } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        setLoading(true);
         const response = await fetch(`https://dummyjson.com/products/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch product");
@@ -26,19 +25,40 @@ export default function ProductDetails() {
       } catch (err) {
         setError("Failed to load product");
         console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchProduct();
   }, [id]);
 
-  if (loading) {
+  if (!product && !error) {
     return (
-      <div className="flex justify-center items-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <Layout>
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="p-6 bg-white">
+                <div className="mb-4">
+                  <Skeleton className="w-full aspect-square rounded-lg" />
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <Skeleton key={index} className="h-16 w-16 rounded-md" />
+                  ))}
+                </div>
+              </div>
+              <div className="p-6 bg-gray-50">
+                <Skeleton className="h-8 w-3/4 mb-4" />
+                <Skeleton className="h-6 w-1/2 mb-4" />
+                <Skeleton className="h-8 w-1/3 mb-6" />
+                <Skeleton className="h-12 w-full mb-4" />
+                <Skeleton className="h-6 w-2/3 mb-2" />
+                <Skeleton className="h-6 w-1/2" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
     );
   }
 

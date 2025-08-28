@@ -12,6 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "nuka-carousel": "^8.2.0",
     "sneaks-api": "^1.2.3"
   },
   "devDependencies": {

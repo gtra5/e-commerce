@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Search, Star, ShoppingCart, Eye, Clock } from "lucide-react";
+import { ProductGridSkeleton } from "./Skeleton";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const query = searchParams.get("q");
@@ -13,11 +13,9 @@ function SearchResults() {
   useEffect(() => {
     if (!query) {
       setSearchResults([]);
-      setLoading(false);
       return;
     }
 
-    setLoading(true);
     setError(null);
 
     const searchProducts = async () => {
@@ -28,10 +26,8 @@ function SearchResults() {
         if (!response.ok) throw new Error("Search failed");
         const data = await response.json();
         setSearchResults(data.products || []);
-        setLoading(false);
       } catch (err) {
         setError(err.message);
-        setLoading(false);
       }
     };
 
@@ -69,10 +65,18 @@ function SearchResults() {
     ));
   };
 
-  if (loading) {
+  if (searchResults.length === 0 && !error && query) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-lg text-gray-600">Searching for "{query}"...</div>
+      <div className="max-w-7xl mx-auto p-6 font-montserrat">
+        <div className="mb-6">
+          <div className="flex items-center gap-3 mb-4">
+            <Search className="w-6 h-6 text-blue-600" />
+            <h1 className="text-2xl font-bold text-gray-800">
+              Search Results for "{query}"
+            </h1>
+          </div>
+        </div>
+        <ProductGridSkeleton count={6} />
       </div>
     );
   }
