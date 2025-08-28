@@ -84,7 +84,7 @@ export function ProductSlide() {
               ${currentProduct.price}
             </div>
             <button
-              className="bg-white w-full  md:text-black hover:bg-gray-100 text-base px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg w-fit mx-auto md:mx-0"
+              className="bg-white text-black w-0 hover:bg-gray-100 text-base px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg w-fit mx-auto md:mx-0"
               onClick={() =>
                 console.log(`Shopping for ${currentProduct.title}`)
               }
