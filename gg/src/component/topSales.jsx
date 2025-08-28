@@ -114,9 +114,9 @@ function TopSales() {
     <div className="px-4 py-6 bg-white">
       <h1 className="text-2xl font-bold mb-4">Trending Products</h1>
 
-  <div className="flex space-x-2 overflow-x-auto custom-scrollbar mb-4">
+  <div className="flex space-x-2 overflow-x-auto custom-scrollbar mb-2">
         {categories.map((category) => (
-          <div key={category} className="inline-block p-2 md:p-0">
+          <div key={category} className="inline-block p-1 md:p-0">
             {/* Mobile enhanced button */}
             <button
               key={`${category}-mobile`}
