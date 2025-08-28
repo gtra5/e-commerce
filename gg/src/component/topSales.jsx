@@ -55,7 +55,7 @@ function TopSales() {
   const renderCards = () => {
     if (loading) {
       return (
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="bg-card text-card-foreground p-6 rounded-lg shadow-sm animate-pulse">
               <div className="w-full h-32 bg-muted rounded mb-4"></div>
@@ -133,7 +133,7 @@ function TopSales() {
 
               {/* Active glow effect */}
               {activeHeader === category && (
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 opacity-20 blur-sm animate-pulse" />
+                <div className="absolute inset-0  rounded-full bg-gradient-to-r from-blue-400 to-blue-500 opacity-20 blur-sm animate-pulse" />
               )}
             </button>
 

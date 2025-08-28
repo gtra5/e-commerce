@@ -234,7 +234,7 @@ function Slideproducts() {
                       </span>
                       {product.discountPercentage > 0 && (
                         <span className="text-xs sm:text-sm text-gray-500 line-through">
-                          {formatPrice(product.price)}
+                          {Math.ceil(product.price)}
                         </span>
                       )}
                     </div>

@@ -62,7 +62,7 @@ function Products() {
   return (
     <div className="w-full">
       {/* Mobile: side-scrollable */}
-      <div className="flex  gap-4 overflow-x-auto scrollbar-hide px-1 py-2 sm:hidden">
+      <div className="flex  gap-4 overflow-x-auto scrollbar-hide px-4 py-2  md:hidden">
         {[0, 2, 4].map((start, idx) => (
           <div
             key={idx}
@@ -101,7 +101,7 @@ function Products() {
         ))}
       </div>
       {/* Desktop: grid */}
-      <div className="hidden sm:grid bg-[#F5F7F8] rounded-2xl font-sans w-full min-h-[200px] gap-4 grid-cols-1 md:grid-cols-3 xl:min-h-[300px]">
+      <div className="hidden sm:hidden md:grid  bg-[#F5F7F8] rounded-2xl font-sans  gap-4 grid-cols-1 md:grid-cols-3 p-3 xl:min-h-[300px]">
         {/* First Section - Orange Gradient */}
         <div className="rounded-2xl bg-gradient-to-r from-orange-600 to-orange-700 p-4">
           {products.slice(0, 1).map((product) => (

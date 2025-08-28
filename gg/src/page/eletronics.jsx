@@ -15,7 +15,7 @@ function Eletronics() {
                         backgroundPosition: "center",
                       }}
             >
-                <h1 className='text-4xl text-white'>Electronics</h1></div>
+                <h1 className='text-4xl text-white'>Coming soon</h1></div>
            </div>
       </div>
     </Layout>

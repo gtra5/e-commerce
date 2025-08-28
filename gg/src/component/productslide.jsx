@@ -41,7 +41,7 @@ export function ProductSlide() {
         }}
       >
         <div className="w-full max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
+          <div className="flex flex-col-reverse md:grid grid-cols-2 gap-8 items-center h-full">
             <div className="space-y-6 text-center md:text-left flex flex-col justify-center">
               <Skeleton className="h-12 w-3/4 mx-auto md:mx-0" />
               <Skeleton className="h-6 w-full mx-auto md:mx-0" />
