@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Star, Eye, ShoppingCart, Clock } from "lucide-react";
 import { IoMdFemale } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { ProductGridSkeleton } from "./Skeleton";
 
 function FemaleFash() {
   const [products, setProducts] = useState([]);
@@ -79,7 +78,7 @@ function FemaleFash() {
     ));
   };
   if (products.length === 0 && !error) {
-    return <ProductGridSkeleton count={8} />;
+    return null;
   }
 
   if (error) {
@@ -198,8 +197,6 @@ function FemaleFash() {
 
                 {/* Product Info */}
                 <div className="flex-1 flex flex-col">
-                
-
                   {/* Product Title */}
                   <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
                     {product.title}

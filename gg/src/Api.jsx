@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Skeleton from "./component/Skeleton";
 
 const Mwatch = () => {
   const [watch, setWatch] = useState(null);
@@ -36,14 +35,7 @@ const Mwatch = () => {
   if (!watch && !error) {
     return (
       <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg shadow-sm min-h-[420px] md:min-h-[420px] lg:min-h-[420px] xl:min-h-[420px] 2xl:min-h-[420px] flex flex-col justify-center p-4 h-full">
-        <Skeleton className="h-8 w-3/4 mb-4" />
-        <div className="w-full flex-1 flex items-center justify-center">
-          <Skeleton className="w-full h-64" />
-        </div>
-        <div className="flex flex-row justify-between">
-          <Skeleton className="h-12 w-24 rounded-full" />
-          <Skeleton className="h-8 w-20" />
-        </div>
+        return null;
       </div>
     );
   }

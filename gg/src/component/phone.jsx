@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Smartphone, Star, Eye, ShoppingCart, Clock } from "lucide-react";
-import { ProductGridSkeleton } from "./Skeleton";
 
 function Phone() {
   const [products, setProducts] = useState([]);
@@ -50,7 +49,6 @@ function Phone() {
     return price - (price * discountPercentage) / 100;
   };
 
-
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -80,7 +78,7 @@ function Phone() {
 
   // Empty state
   if (products.length === 0 && !error) {
-    return <ProductGridSkeleton count={8} />;
+    return null;
   }
 
   return (
@@ -138,7 +136,6 @@ function Phone() {
           style={{ scrollBehavior: "smooth" }}
         >
           {products.map((product) => {
-          
             const discountedPrice = getDiscountedPrice(
               product.price,
               product.discountPercentage

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Droplets, Star, Eye, ShoppingCart, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ProductGridSkeleton } from "./Skeleton";
 
 function Skincare() {
   const [products, setProducts] = useState([]);
@@ -66,7 +65,6 @@ function Skincare() {
     return price - (price * discountPercentage) / 100;
   };
 
- 
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -79,7 +77,7 @@ function Skincare() {
     ));
   };
   if (products.length === 0 && !error) {
-    return <ProductGridSkeleton count={8} />;
+    return null;
   }
 
   if (error) {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Skeleton from "../component/Skeleton";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -22,40 +21,7 @@ function Products() {
   }, []);
 
   if (products.length === 0) {
-    return (
-      <div className="grid bg-[#F5F7F8] rounded-2xl font-sans w-full min-h-[200px] gap-4 grid-cols-1 md:grid-cols-3 xl:min-h-[300px]">
-        <div className="rounded-2xl bg-gradient-to-r from-orange-600 to-orange-700 p-4">
-          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
-            <div className="flex-1 text-center lg:text-left">
-              <Skeleton className="h-6 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-1/2 mb-3" />
-              <Skeleton className="h-8 w-20 rounded-full" />
-            </div>
-            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
-          </div>
-        </div>
-        <div className="rounded-2xl bg-gradient-to-r from-green-600 to-green-700 p-4">
-          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
-            <div className="flex-1 text-center lg:text-left">
-              <Skeleton className="h-6 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-1/2 mb-3" />
-              <Skeleton className="h-8 w-20 rounded-full" />
-            </div>
-            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
-          </div>
-        </div>
-        <div className="rounded-2xl bg-gradient-to-r from-gray-700 to-black p-4">
-          <div className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col lg:flex-row items-center gap-3 h-full">
-            <div className="flex-1 text-center lg:text-left">
-              <Skeleton className="h-6 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-1/2 mb-3" />
-              <Skeleton className="h-8 w-20 rounded-full" />
-            </div>
-            <Skeleton className="w-full lg:w-32 xl:w-40 h-32 md:h-40 xl:h-48 rounded flex-shrink-0" />
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   // Mobile: side-scrollable, Desktop: grid

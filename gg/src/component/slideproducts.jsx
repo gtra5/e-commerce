@@ -4,19 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import { Car, Star, Eye, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-function ProductGridSkeleton() {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div
-          key={i}
-          className="bg-gray-100 animate-pulse rounded-xl h-40 w-full"
-        />
-      ))}
-    </div>
-  );
-}
-
 function Slideproducts() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
@@ -90,7 +77,7 @@ function Slideproducts() {
   };
 
   if (products.length === 0 && !error) {
-    return <ProductGridSkeleton count={8} />;
+    return null;
   }
 
   if (error) {
