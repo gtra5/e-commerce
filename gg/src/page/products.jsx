@@ -45,7 +45,7 @@ function Products() {
             {products.slice(start, start + 1).map((product) => (
               <div
                 key={product.id}
-                className="flex bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white flex-col items-center gap-3 h-full"
+                className="flex  rounded-lg p-3 text-white flex-col items-center gap-3 h-full"
               >
                 <div className="flex-1 text-center">
                   <h3 className="text-base font-semibold line-clamp-2">
@@ -67,7 +67,7 @@ function Products() {
         ))}
       </div>
       {/* Desktop: grid */}
-      <div className="hidden sm:hidden md:grid  bg-[#F5F7F8] rounded-2xl font-sans  gap-4 grid-cols-1 md:grid-cols-3 p-3 xl:min-h-[300px]">
+      <div className="hidden sm:hidden md:grid w-full font-sans  gap-4 grid-cols-1 md:grid-cols-3  xl:min-h-[300px]">
         {/* First Section - Orange Gradient */}
         <div className="rounded-2xl bg-gradient-to-r from-orange-600 to-orange-700 p-4">
           {products.slice(0, 1).map((product) => (

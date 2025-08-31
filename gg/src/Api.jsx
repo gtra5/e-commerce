@@ -63,7 +63,7 @@ const Mwatch = () => {
       <h2 className="text-2xl font-semibold font-montserrat text-[#F5F5F5]">
         Explore Jewellery and accessories
       </h2>
-      <div className="w-full flex-1 flex items-center justify-center">
+      <div className="w-full flex-2 flex items-center justify-center">
         <img
           className="w-full h-auto max-h-75 object-contain"
           src={watch.images?.[0] || "https://via.placeholder.com/600"}
