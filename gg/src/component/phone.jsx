@@ -82,9 +82,9 @@ function Phone() {
   }
 
   return (
-    <div className="relative w-full mx-auto py-4 sm:py-6 font-montserrat">
+    <div className="relative w-full  py-4 sm:py-6 font-montserrat">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-t-none shadow-lg flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center md:rounded-t-2xl md:justify-between">
+      <div className="bg-gradient-to-r from-green-600 to-green-700  shadow-lg flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center md: md:justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
             <Smartphone className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
@@ -107,11 +107,11 @@ function Phone() {
       </div>
 
       {/* Product Cards */}
-      <div className="relative bg-white px-2 py-2 h-fit-content lg:rounded-b-xl shadow-md">
+      <div className="relative bg-white px-2 py-2 h-fit-content lg:rounded-b-xl group/slider">
         {/* Left Arrow */}
         <button
           onClick={() => scrollBy(-350)}
-          className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-200 hover:bg-gray-300 rounded-full p-1.5 sm:p-2 shadow text-2xl items-center justify-center hidden sm:flex"
+          className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-200 hover:bg-gray-300 rounded-full p-1.5 sm:p-2 shadow text-2xl items-center justify-center hidden sm:flex opacity-0 group-hover/slider:opacity-100 transition-opacity duration-200"
           aria-label="Scroll left"
         >
           <svg
@@ -216,7 +216,7 @@ function Phone() {
         {/* Right Arrow */}
         <button
           onClick={() => scrollBy(350)}
-          className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-200 hover:bg-gray-300 rounded-full p-1.5 sm:p-2 shadow text-2xl items-center justify-center hidden sm:flex"
+          className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-200 hover:bg-gray-300 rounded-full p-1.5 sm:p-2 shadow text-2xl items-center justify-center hidden sm:flex opacity-0 group-hover/slider:opacity-100 transition-opacity duration-200"
           aria-label="Scroll right"
         >
           <svg

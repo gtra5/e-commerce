@@ -14,19 +14,20 @@ function Home() {
 
   return (
     <Layout>
-      <div className="  rounded-b-2xl">
-       
-             
-          <div className="space-y-4">
-            <KemetAd />
+      <div className="">
+      <div className="space-y-4  mb-5">
+         <KemetAd />
             <Products/>
-            <TopSales />
-            <Fashion />
+      </div>
+             
+          <div className=" bg-blue">
+             <TopSales />
+          </div>
+      
             <Phone />
             <FemaleFash />
             <Skincare />
             <Slideproducts />
-          </div>
           </div>
     </Layout>
   );
