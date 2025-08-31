@@ -164,7 +164,7 @@ function FemaleFash() {
 
             return (
               <div
-                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[300px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
+                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[250px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
               >
@@ -198,12 +198,12 @@ function FemaleFash() {
                 {/* Product Info */}
                 <div className="flex-1 flex flex-col">
                   {/* Product Title */}
-                  <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
+                  <h2 className="font-extralight sm:text-sm sm:font-semibold text-gray-800 mb-2 line-clamp-2">
                     {product.title}
                   </h2>
 
                   {/* Rating */}
-                  <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="hidden sm:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                     <div className="flex items-center gap-0.5 sm:gap-1">
                       {renderStars(product.rating)}
                     </div>
@@ -219,7 +219,7 @@ function FemaleFash() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden sm:text-xs sm:text-sm text-gray-500 line-through">
                           {formatPrice(product.price)}
                         </span>
                       )}

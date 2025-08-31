@@ -91,15 +91,15 @@ function TopSales() {
                   </div>
                 )}
               </div>
-              <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">{product.title}</h2>
-              <div className="flex items-center gap-1 mb-2">
+              <h2 className="font-light md:text-sm md:font-semibold text-gray-800 mb-2 line-clamp-2">{product.title}</h2>
+              <div className="hidden sm:flex items-center gap-1 mb-2">
                 {renderStars(product.rating)}
                 <span className="text-xs text-gray-500">({product.rating})</span>
               </div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text:xs md:text-lg font-bold text-gray-900">{formatPrice(discountedPrice)}</span>
                 {product.discountPercentage > 0 && (
-                  <span className="md:text-xs text-gray-500 line-through ">{Math.ceil(product.price)}</span>
+                  <span className="hidden md:block text-xs text-gray-500 line-through ">{Math.ceil(product.price)}</span>
                 )}
               </div>
               <div className="text-xs text-gray-600">Only {product.stock} left in stock</div>

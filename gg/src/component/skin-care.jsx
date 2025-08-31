@@ -104,7 +104,7 @@ function Skincare() {
     }
   };
   return (
-    <div className="relative w-full mx-auto  sm:py-4 font-montserrat">
+    <div className="relative w-full mx-auto  sm:py-5 font-montserrat">
       <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-t-none shadow-lg flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center md:rounded-t-xs md:justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
@@ -163,7 +163,7 @@ function Skincare() {
 
             return (
               <div
-                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[300px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
+                className="bg-white shadow-lg hover:shadow-2xl p-3  sm:p-4 rounded-xl sm:rounded-2xl flex flex-col h-[250px] group transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 min-w-[160px] sm:min-w-[200px] md:min-w-[220px] lg:min-w-[200px] md:h-[300px] lg:h-[350px]"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
               >
@@ -199,12 +199,12 @@ function Skincare() {
                   {/* Stock Status */}
 
                   {/* Product Title */}
-                  <h2 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
+                  <h2 className="font-extralight sm:text-sm sm:font-semibold text-gray-800 mb-2 line-clamp-2">
                     {product.title}
                   </h2>
 
                   {/* Rating */}
-                  <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="hidden sm:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                     <div className="flex items-center gap-0.5 sm:gap-1">
                       {renderStars(product.rating)}
                     </div>
@@ -220,7 +220,7 @@ function Skincare() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden md:text-xs sm:text-sm text-gray-500 line-through">
                           {formatPrice(product.price)}
                         </span>
                       )}
