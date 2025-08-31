@@ -76,7 +76,7 @@ function TopSales() {
             <div
               key={product.id}
               onClick={() => navigate(`/details/${product.id}`)}
-              className="bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg rounded-b-2xl p-6 flex flex-col font-montserrat hover:shadow-xl transition-shadow cursor-pointer"
+              className="bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg rounded-b-2xl  flex flex-col font-montserrat hover:shadow-xl transition-shadow cursor-pointer p-4  md:p-6"
             >
               <div className="relative overflow-hidden rounded-lg mb-4 aspect-square bg-gray-50">
                 <img
@@ -97,9 +97,9 @@ function TopSales() {
                 <span className="text-xs text-gray-500">({product.rating})</span>
               </div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg font-bold text-gray-900">{formatPrice(discountedPrice)}</span>
+                <span className="text:xs md:text-lg font-bold text-gray-900">{formatPrice(discountedPrice)}</span>
                 {product.discountPercentage > 0 && (
-                  <span className="text-xs text-gray-500 line-through">{Math.ceil(product.price)}</span>
+                  <span className="md:text-xs text-gray-500 line-through ">{Math.ceil(product.price)}</span>
                 )}
               </div>
               <div className="text-xs text-gray-600">Only {product.stock} left in stock</div>
@@ -114,7 +114,7 @@ function TopSales() {
     <div className="px-4 py-6 bg-white">
       <h1 className="text-2xl font-bold mb-4">Trending Products</h1>
 
-  <div className="flex space-x-2 overflow-x-auto custom-scrollbar mb-2">
+  <div className="flex space-x-2 overflow-x-auto custom-scrollbar  [&::-webkit-scrollbar]:hidden  mb-2">
         {categories.map((category) => (
           <div key={category} className="inline-block p-1 md:p-0">
             {/* Mobile enhanced button */}

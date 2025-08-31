@@ -26,9 +26,9 @@ function Products() {
 
   // Mobile: side-scrollable, Desktop: grid
   return (
-    <div className="w-full">
+    <div className="w-full md:m-2 lg:m-0">
       {/* Mobile: side-scrollable */}
-      <div className="flex  gap-4 overflow-x-auto scrollbar-hide px-4 py-2  md:hidden">
+      <div className="flex  gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden  px-4 py-2  md:hidden">
         {[0, 2, 4].map((start, idx) => (
           <div
             key={idx}
