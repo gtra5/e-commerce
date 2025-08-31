@@ -69,7 +69,7 @@ function TopSales() {
     }
 
     return (
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-6">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-3">
         {products.map((product) => {
           const discountedPrice = getDiscountedPrice(product.price, product.discountPercentage)
           return (
@@ -123,7 +123,7 @@ function TopSales() {
               onClick={() => handleHeaderClick(category)}
               className={`md:hidden relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg whitespace-nowrap ${
                 activeHeader === category
-                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg "
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900"
               }`}
             >
