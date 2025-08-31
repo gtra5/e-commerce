@@ -27,8 +27,8 @@ function Products() {
   // Mobile: side-scrollable, Desktop: grid
   return (
     <div className="w-full md:m-2 lg:m-0">
-      {/* Mobile: side-scrollable */}
-      <div className="flex  gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden  px-4 py-2  md:hidden">
+     {/* Mobile: side-scrollable with visible scrollbar */}
+      <div className="flex gap-4 overflow-x-auto px-4 py-2 md:hidden scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-full hover:scrollbar-thumb-gray-400">
         {[0, 2, 4].map((start, idx) => (
           <div
             key={idx}
@@ -38,19 +38,14 @@ function Products() {
                 idx === 0
                   ? "linear-gradient(to right, #ea580c, #c2410c)"
                   : idx === 1
-                  ? "linear-gradient(to right, #16a34a, #166534)"
-                  : "linear-gradient(to right, #374151, #000)",
+                    ? "linear-gradient(to right, #16a34a, #166534)"
+                    : "linear-gradient(to right, #374151, #000)",
             }}
           >
             {products.slice(start, start + 1).map((product) => (
-              <div
-                key={product.id}
-                className="flex  rounded-lg p-3 text-white flex-col items-center gap-3 h-full"
-              >
+              <div key={product.id} className="flex rounded-lg p-3 text-white flex-col items-center gap-3 h-full">
                 <div className="flex-1 text-center">
-                  <h3 className="text-base font-semibold line-clamp-2">
-                    {product.title}
-                  </h3>
+                  <h3 className="text-base font-semibold line-clamp-2">{product.title}</h3>
                   <p className="text-sm opacity-90 mt-1">${product.price}</p>
                   <button className="bg-black text-white hover:bg-gray-800 text-sm px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
                     Shop Now
