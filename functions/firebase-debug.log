@@ -1,0 +1,34 @@
+[debug] [2025-09-13T07:28:54.294Z] ----------------------------------------------------------------------
+[debug] [2025-09-13T07:28:54.301Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only functions
+[debug] [2025-09-13T07:28:54.302Z] CLI Version:   14.15.2
+[debug] [2025-09-13T07:28:54.302Z] Platform:      win32
+[debug] [2025-09-13T07:28:54.303Z] Node Version:  v22.17.0
+[debug] [2025-09-13T07:28:54.303Z] Time:          Sat Sep 13 2025 08:28:54 GMT+0100 (West Africa Standard Time)
+[debug] [2025-09-13T07:28:54.303Z] ----------------------------------------------------------------------
+[debug] 
+[error] !!  functions: Failed to start Functions emulator: codebase source must be specified {"metadata":{"emulator":{"name":"functions"},"message":"Failed to start Functions emulator: codebase source must be specified"}}
+[debug] [2025-09-13T07:28:54.440Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-09-13T07:28:54.441Z] > authorizing via signed-in user (elijaholokode@gmail.com)
+[warn] !  Could not find config (firebase.json) so using defaults. 
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2025-09-13T07:28:54.470Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-09-13T07:28:54.471Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-09-13T07:28:54.486Z] [hub] writing locator at C:\Users\USER\AppData\Local\Temp\hub-travelstore-df330.json
+[error] !!  functions: Failed to start Functions emulator: codebase source must be specified {"metadata":{"emulator":{"name":"functions"},"message":"Failed to start Functions emulator: codebase source must be specified"}}
+[debug] [2025-09-13T07:28:54.572Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬──────────────────────────────────┬─────────────────────┐
+│ Emulator  │ Host:Port                        │ View in Emulator UI │
+├───────────┼──────────────────────────────────┼─────────────────────┤
+│ Functions │ Failed to initialize (see above) │                     │
+└───────────┴──────────────────────────────────┴─────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
