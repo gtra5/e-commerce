@@ -105,7 +105,7 @@ function FemaleFash() {
     }
   };
   return (
-    <div className="relative w-full mx-auto  sm:font-montserrat">
+    <div className="relative w-full mx-auto font-montserrat">
       <div className="bg-gradient-to-r from-pink-500 to-pink-500   shadow-lg flex flex-col items-start p-4 sm:p-6 md:flex-row md:items-center  md:justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
@@ -203,7 +203,7 @@ function FemaleFash() {
                   </h2>
 
                   {/* Rating */}
-                  <div className="hidden sm:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="hidden md:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                     <div className="flex items-center gap-0.5 sm:gap-1">
                       {renderStars(product.rating)}
                     </div>
@@ -219,7 +219,7 @@ function FemaleFash() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="hidden sm:text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden sm:block text-xs sm:text-sm text-gray-500 line-through">
                           {formatPrice(product.price)}
                         </span>
                       )}

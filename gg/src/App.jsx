@@ -8,6 +8,9 @@ import Products from "./page/products";
 import ProductDetails from "./component/ProductDetails";
 import SearchResults from "./component/SearchResults";
 import CartPage from "./page/Cart";
+import Eletronics from "./page/eletronics";
+import Signup from "./page/signup";
+import Signin from "./page/signin";
 
 // Enhanced Error Boundary Component
 function ErrorBoundary() {
@@ -104,37 +107,53 @@ function LoadingSpinner() {
   );
 }
 
+
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Home />, 
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/home",
-      element: <Home />,
+      element: <Home />, 
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/products",
-      element: <Products />,
+      element: <Products />, 
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/details/:id",
-      element: <ProductDetails />,
+      element: <ProductDetails />, 
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/search",
-      element: <SearchResults />,
+      element: <SearchResults />, 
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/cart",
-      element: <CartPage />,
+      element: <CartPage />, 
       errorElement: <ErrorBoundary />,
+    },
+    {
+      path:"/electronics",
+      element:<Eletronics />, 
+      errorElement:<ErrorBoundary />
+    },
+    {
+      path:"/signUp",
+      element:<Signup/>,
+      errorElement:<ErrorBoundary />
+    },
+    {
+      path:"/signIn",
+      element:<Signin/>,
+      errorElement:<ErrorBoundary />
     },
     {
       path: "*",
@@ -143,7 +162,7 @@ function App() {
   ]);
 
   return (
-    <div>
+    <div className="min-h-screen w-full overflow-y-auto">
       <RouterProvider router={router} />
     </div>
   );

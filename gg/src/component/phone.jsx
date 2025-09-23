@@ -198,7 +198,7 @@ function Phone() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="hidden md:text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden sm:block text-xs sm:text-sm text-gray-500 line-through">
                           {formatPrice(product.price)}
                         </span>
                       )}

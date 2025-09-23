@@ -89,3 +89,6 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.scrollbar-thin {
+  scrollbar-width: thin;
+}

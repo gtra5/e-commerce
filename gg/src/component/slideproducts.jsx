@@ -220,7 +220,7 @@ function Slideproducts() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="hidden md:text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden md:block text-xs sm:text-sm text-gray-500 line-through">
                           {Math.round(product.price)}
                         </span>
                       )}

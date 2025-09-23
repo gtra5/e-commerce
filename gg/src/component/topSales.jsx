@@ -92,7 +92,7 @@ function TopSales() {
                 )}
               </div>
               <h2 className="font-light md:text-sm md:font-semibold text-gray-800 mb-2 line-clamp-2">{product.title}</h2>
-              <div className="hidden sm:flex items-center gap-1 mb-2">
+              <div className="hidden md:flex items-center gap-1 mb-2">
                 {renderStars(product.rating)}
                 <span className="text-xs text-gray-500">({product.rating})</span>
               </div>
@@ -121,7 +121,7 @@ function TopSales() {
             <button
               key={`${category}-mobile`}
               onClick={() => handleHeaderClick(category)}
-              className={`md:hidden relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg whitespace-nowrap ${
+              className={`md:hidden relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg whitespace-nowrap  ${
                 activeHeader === category
                   ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg "
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900"

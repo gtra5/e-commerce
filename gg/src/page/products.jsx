@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 function Products() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,11 +29,11 @@ function Products() {
   return (
     <div className="w-full md:m-2 lg:m-0">
      {/* Mobile: side-scrollable with visible scrollbar */}
-      <div className="flex gap-4 overflow-x-auto px-4 py-2 md:hidden scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-full hover:scrollbar-thumb-gray-400">
+      <div className="flex gap-4 overflow-x-auto px-4 py-2 md:hidden hide-scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-full hover:scrollbar-thumb-gray-400">
         {[0, 2, 4].map((start, idx) => (
           <div
             key={idx}
-            className="min-w-[85vw] max-w-[90vw] rounded-2xl bg-gradient-to-r p-4"
+            className="min-w-[85vw] max-w-[90vw] min-h-[400px] rounded-2xl bg-gradient-to-r p-4"
             style={{
               background:
                 idx === 0
@@ -47,14 +48,16 @@ function Products() {
                 <div className="flex-1 text-center">
                   <h3 className="text-base font-semibold line-clamp-2">{product.title}</h3>
                   <p className="text-sm opacity-90 mt-1">${product.price}</p>
-                  <button className="bg-black text-white hover:bg-gray-800 text-sm px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                  <button 
+                  onClick={() => navigate(`/details/${product.id}`)}
+                   className="bg-black text-white hover:bg-gray-800 text-sm px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
                     Shop Now
                   </button>
                 </div>
                 <img
                   src={product.thumbnail || "/placeholder.svg"}
                   alt={product.title}
-                  className="w-full h-32 object-cover rounded flex-shrink-0"
+                  className="w-full h-55 object-cover rounded flex-shrink-0"
                 />
               </div>
             ))}
@@ -77,7 +80,9 @@ function Products() {
                 <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
                   ${product.price}
                 </p>
-                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                <button 
+                onClick={() => navigate(`/details/${product.id}`)}
+                 className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
                   Shop Now
                 </button>
               </div>
@@ -103,7 +108,9 @@ function Products() {
                 <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
                   ${product.price}
                 </p>
-                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                <button
+                onClick={() => navigate(`/details/${product.id}`)}
+                 className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
                   Shop Now
                 </button>
               </div>
@@ -129,7 +136,9 @@ function Products() {
                 <p className="text-xs md:text-sm lg:text-base xl:text-lg opacity-90 mt-1">
                   ${product.price}
                 </p>
-                <button className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
+                <button 
+                onClick={() => navigate(`/details/${product.id}`)}
+                 className="bg-black text-white hover:bg-gray-800 text-xs md:text-sm lg:text-base px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg mt-3">
                   Shop Now
                 </button>
               </div>

@@ -204,7 +204,7 @@ function Skincare() {
                   </h2>
 
                   {/* Rating */}
-                  <div className="hidden sm:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="hidden md:flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                     <div className="flex items-center gap-0.5 sm:gap-1">
                       {renderStars(product.rating)}
                     </div>
@@ -220,7 +220,7 @@ function Skincare() {
                         {formatPrice(discountedPrice)}
                       </span>
                       {product.discountPercentage > 0 && (
-                        <span className="hidden md:text-xs sm:text-sm text-gray-500 line-through">
+                        <span className="hidden md:block text-xs sm:text-sm text-gray-500 line-through">
                           {formatPrice(product.price)}
                         </span>
                       )}
