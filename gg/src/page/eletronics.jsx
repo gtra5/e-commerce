@@ -1,5 +1,5 @@
 "use client";
-import Layout from "../result";
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -21,7 +21,9 @@ import {
   X,
   CheckCircle,
   AlertCircle,
+  Menu,
 } from "lucide-react";
+import Layout from "../result";
 
 const CATEGORIES_API = "https://dummyjson.com/products/categories";
 const PRODUCTS_API = "https://dummyjson.com/products/category/";
@@ -232,8 +234,11 @@ const QuickViewModal = ({
 };
 
 function Electronics() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search); // Moved before useState
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(queryParams.get("category") || "all");
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -254,18 +259,15 @@ function Electronics() {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Handle URL parameters for category navigation
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const categoryParam = urlParams.get("category");
-
-    if (categoryParam && categoryParam !== selectedCategory) {
-      setSelectedCategory(categoryParam);
+    const queryParams = new URLSearchParams(location.search);
+    const categoryFromUrl = queryParams.get("category") || "all";
+    if (categoryFromUrl !== selectedCategory) {
+      setSelectedCategory(categoryFromUrl);
     }
-  }, [location.search, selectedCategory]);
+  }, [location.search]);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -328,7 +330,7 @@ function Electronics() {
           setLoadingProducts(false);
         });
     }
-  }, [selectedCategory]);
+  }, []);
 
   useEffect(() => {
     const filtered = products.filter((product) => {
@@ -342,7 +344,6 @@ function Electronics() {
       return matchesSearch && matchesPrice && matchesRating;
     });
 
-    // Sort products
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "price-low":
@@ -378,6 +379,17 @@ function Electronics() {
     setShowRecommendations(topRated.length > 0);
   };
 
+  const addToCompare = (product, e) => {
+    if (e) e.stopPropagation();
+    if (compareList.length >= 3) {
+      alert("You can compare up to 3 products at a time");
+      return;
+    }
+    if (!compareList.find((p) => p.id === product.id)) {
+      setCompareList([...compareList, product]);
+    }
+  };
+
   const removeFromCompare = (productId) => {
     setCompareList(compareList.filter((p) => p.id !== productId));
   };
@@ -385,17 +397,10 @@ function Electronics() {
   const handleCategoryClick = (slug) => {
     setSelectedCategory(slug);
     setError(null);
-    setSearchTerm(""); // Reset search when changing category
+    setSearchTerm("");
     setCompareList([]);
-
-    // Update URL with category parameter
-    const url = new URL(window.location);
-    if (slug === "all") {
-      url.searchParams.delete("category");
-    } else {
-      url.searchParams.set("category", slug);
-    }
-    navigate(url.pathname + url.search, { replace: true });
+    setSidebarOpen(false);
+    navigate(`/electronics?category=${encodeURIComponent(slug)}`);
   };
 
   const addToCart = (product, e) => {
@@ -431,30 +436,6 @@ function Electronics() {
     setSortBy("name");
   };
 
-  // Loading state for categories
-  if (loadingCategories) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-lg text-muted-foreground flex items-center gap-2">
-          <RefreshCw className="w-5 h-5 animate-spin" />
-          Loading categories...
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-destructive text-lg flex items-center gap-2">
-          <AlertCircle className="w-5 h-5" />
-          Error: {error}
-        </div>
-      </div>
-    );
-  }
-
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -479,15 +460,145 @@ function Electronics() {
     return price - (price * discountPercentage) / 100;
   };
 
+  if (loadingCategories) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-lg text-muted-foreground flex items-center gap-2">
+          <RefreshCw className="w-5 h-5 animate-spin" />
+          Loading categories...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-destructive text-lg flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          Error: {error}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Layout>
-      <div className="min-h-screen bg-background">
-        {/* Main Content */}
-        <main className="bg-white min-h-screen overflow-y-auto">
+      <div className="flex gap-4 min-h-screen bg-background">
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        <aside
+          className={`
+          fixed lg:relative z-50 lg:z-auto
+          w-80 lg:w-69 bg-white border-r border-[#e2e8f0]
+          h-screen overflow-y-auto hide-scrollbar
+          transform transition-transform duration-300 ease-in-out
+          ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }
+          lg:rounded-l-lg
+        `}
+        >
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4 lg:hidden">
+              <h3 className="text-3xl font-semibold text-sidebar-foreground">
+                Categories
+              </h3>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-4 mb-8">
+              {compareList.length > 0 && (
+                <div className="flex items-center justify-between p-3 bg-secondary/10 rounded-xl border border-secondary/20">
+                  <div className="flex items-center gap-2">
+                    <Compare className="w-4 h-4 text-secondary" />
+                    <span className="text-sm font-medium text-sidebar-foreground">
+                      Compare
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-secondary text-secondary-foreground text-xs px-2 py-1 rounded-full font-semibold">
+                      {compareList.length}
+                    </span>
+                    <button
+                      onClick={() => setShowComparison(true)}
+                      className="text-xs text-secondary hover:underline"
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <h3 className="text-sm font-semibold text-sidebar-foreground mb-4 uppercase tracking-wide hidden lg:block">
+              Categories
+            </h3>
+            <ul className="space-y-1">
+              <li>
+                <button
+                  onClick={() => handleCategoryClick("all")}
+                  className={`w-full text-left px-4 py-3 text-sidebar-foreground rounded-xl transition-all duration-200 ${
+                    selectedCategory === "all"
+                      ? "bg-blue-500 text-white font-semibold shadow-lg"
+                      : "hover:bg-sidebar-accent/50"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>All Products</span>
+                    {selectedCategory === "all" && (
+                      <CheckCircle className="w-4 h-4" />
+                    )}
+                  </div>
+                </button>
+              </li>
+              {categories.map((category) => (
+                <li key={category.slug}>
+                  <button
+                    onClick={() => handleCategoryClick(category.slug)}
+                    className={`w-full text-left px-4 py-3 text-sidebar-foreground rounded-xl transition-all duration-200 ${
+                      selectedCategory === category.slug
+                        ? "bg-blue-500 text-white font-semibold shadow-lg"
+                        : "hover:bg-sidebar-accent/50"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="capitalize">{category.name}</span>
+                      {selectedCategory === category.slug && (
+                        <CheckCircle className="w-4 h-4" />
+                      )}
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        <main className="flex-1 bg-white h-screen overflow-y-auto hide-scrollbar lg:border-l-[#e2e8f0] lg:rounded-r-lg">
           <div className="p-4 lg:p-8">
+            <div className="flex items-center gap-4 mb-6 lg:hidden">
+              <h1 className="text-xl font-bold text-[#374151]">
+                {selectedCategory === "all"
+                  ? "All Products"
+                  : categories.find((c) => c.slug === selectedCategory)?.name ||
+                    selectedCategory}
+              </h1>
+            </div>
+
             {selectedCategory && (
               <>
-                <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between mb-8">
+                <div className="hidden lg:flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between mb-8">
                   <div>
                     <h1 className="text-3xl font-bold text-[#374151] mb-2">
                       {selectedCategory === "all"
@@ -502,7 +613,7 @@ function Electronics() {
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-3 items-center hidden lg:flex">
+                  <div className="flex flex-wrap gap-3 items-center">
                     <button
                       onClick={() =>
                         setViewMode(viewMode === "grid" ? "list" : "grid")
@@ -531,7 +642,7 @@ function Electronics() {
                 </div>
 
                 <div className="space-y-4 lg:space-y-6 mb-6 lg:mb-8">
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 lg:hidden">
                     <button
                       onClick={() =>
                         setViewMode(viewMode === "grid" ? "list" : "grid")
@@ -736,6 +847,7 @@ function Electronics() {
                     product.price,
                     product.discountPercentage
                   );
+                 
 
                   return (
                     <div

@@ -154,7 +154,7 @@ const Subheader = () => {
             <div className="flex items-center space-x-1 text-sm font-medium text-gray-600">
               <span>Categories:</span>
             </div>
-            <div className="flex items-center space-x-6 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center space-x-6 overflow-x-auto hide-scrollbar">
               {categories.map((category, index) => (
                 <div
                   key={index}
@@ -207,23 +207,7 @@ const Subheader = () => {
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="hidden lg:flex items-center justify-center mt-3 pt-3 border-t border-gray-200">
-          <div className="flex items-center space-x-6 text-xs text-gray-500">
-            <div className="flex items-center space-x-1">
-              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-              <span>Live Stock Updates</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-              <span>Fast Delivery</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-              <span>Best Prices</span>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </div>
   )
