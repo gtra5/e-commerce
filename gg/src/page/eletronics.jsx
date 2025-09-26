@@ -541,7 +541,7 @@ function Electronics() {
               )}
             </div>
 
-            <h3 className="text-sm font-semibold text-sidebar-foreground mb-4 uppercase tracking-wide hidden lg:block">
+            <h3 className="text-xl font-bold text-[#374151] mb-4 uppercase tracking-wide hidden lg:block">
               Categories
             </h3>
             <ul className="space-y-1">

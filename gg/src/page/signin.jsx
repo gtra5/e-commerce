@@ -72,7 +72,7 @@ function Signin() {
     >
       <header></header>
       <div
-        className="bg-white w-110 h-140 rounded-3xl shadow-lg flex flex-col justify-center items-center p-6"
+        className="bg-white w-full h-full rounded-none md:w-110  md:rounded-3xl shadow-lg flex flex-col justify-center items-center p-6 md:h-140"
         style={{
           backgroundImage: `radial-gradient(circle 600px at 50% 50%, rgba(59,130,246,0.3), transparent)`,
         }}
@@ -80,10 +80,10 @@ function Signin() {
         <div className="bg-white w-15 h-15 rounded-xl items-center justify-center flex">
           <LogIn size={30} strokeWidth={2.75} />
         </div>
-        <h1 className="text-lg font-medium md:text-2xl  ">
+        <h1 className=" font-medium text-2xl  ">
           Sign in with email
         </h1>
-        <p className="text-sm line-spacing-0 text-center  text-gray-500">
+        <p className="text-[18px] line-spacing-0 text-center  text-gray-500 md:text-sm">
           Type your username and e-mail to create a Travel store account.{" "}
         </p>
 
@@ -99,7 +99,7 @@ function Signin() {
               type="email"
               placeholder="Enter your email"
               onChange={handleChange}
-              className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white"
+              className="pl-10 pr-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white md:pr-4 md:py-2"
               autoComplete="email"
             />
           </div>
@@ -110,14 +110,14 @@ function Signin() {
               type="password"
               placeholder="Enter your password"
               onChange={handleChange}
-              className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white"
+              className="pl-10 pr-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white md:pr-4 md:py-2"
               autoComplete="email"
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex">
-              <input type="checkbox" className="" />
+              <input type="checkbox" className="w-4" />
               <span className="ml-2 text-sm text-gray-600">Remember me</span>
             </div>
             <a href="" className="text-sm text-gray-600">
@@ -125,7 +125,7 @@ function Signin() {
             </a>
           </div>
  {error && <div className="text-sm text-red-600 text-center">{error}</div>}
-          <button className="w-full bg-black/80 text-sm text-white p-2 rounded-xl">
+          <button className="w-full  bg-black/80 text-sm text-white p-2 rounded-xl mt-2">
             {loading ? "Signing in..." : "Sign up"}
           </button>
           <div class="relative flex items-center justify-center " style={{}}>

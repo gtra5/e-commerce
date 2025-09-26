@@ -111,7 +111,7 @@ function Signup() {
           </div>
         )}
       <div
-        className="bg-white w-110 h-140 rounded-3xl shadow-lg flex flex-col justify-center items-center p-6"
+        className="bg-white w-full h-full rounded-none md:w-110  md:rounded-3xl shadow-lg flex flex-col justify-center items-center p-6 md:h-140"
         style={{
           backgroundImage: `radial-gradient(circle 600px at 50% 50%, rgba(59,130,246,0.3), transparent)`,
         }}
@@ -119,10 +119,10 @@ function Signup() {
         <div className="bg-white w-15 h-15 rounded-xl items-center justify-center flex">
           <LogIn size={30} strokeWidth={2.75} />
         </div>
-        <h1 className="text-lg font-medium md:text-2xl  ">
+        <h1 className="text-2xl font-medium  ">
           Sign up with email
         </h1>
-        <p className="text-sm line-spacing-0 text-center  text-gray-500">
+        <p className="text-[18px] line-spacing-0 text-center  text-gray-500 md:text-sm">
           Type your username and e-mail to create a Travel store account.{" "}
         </p>
         <form
@@ -141,10 +141,10 @@ function Signup() {
               onChange={handleChange}
               required
               placeholder="Enter your username"
-              className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white"
+              className="pl-10 pr-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white md:pr-4 md:py-2"
             />
           </div>
-          <div className="relative w-full ">
+          <div className="relative w-full  ">
             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
               name="email"
@@ -152,7 +152,7 @@ function Signup() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white"
+              className="pl-10 pr-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white md:pr-4 md:py-2"
               autoComplete="email"
             />
           </div>
@@ -164,7 +164,7 @@ function Signup() {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white"
+              className="pl-10 pr-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full max-w-full text-gray-700 bg-white md:pr-4 md:py-2"
               autoComplete="email"
             />
           </div>
