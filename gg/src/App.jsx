@@ -11,6 +11,7 @@ import CartPage from "./page/Cart";
 import Eletronics from "./page/eletronics";
 import Signup from "./page/signup";
 import Signin from "./page/signin";
+import Layout from "./component/Layout";
 
 // Enhanced Error Boundary Component
 function ErrorBoundary() {
@@ -107,65 +108,27 @@ function LoadingSpinner() {
   );
 }
 
-
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />, 
+      element: <Layout />, // 👈 wrap all pages
       errorElement: <ErrorBoundary />,
-    },
-    {
-      path: "/home",
-      element: <Home />, 
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: "/products",
-      element: <Products />, 
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: "/details/:id",
-      element: <ProductDetails />, 
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: "/search",
-      element: <SearchResults />, 
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: "/cart",
-      element: <CartPage />, 
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path:"/electronics",
-      element:<Eletronics />, 
-      errorElement:<ErrorBoundary />
-    },
-    {
-      path:"/signUp",
-      element:<Signup/>,
-      errorElement:<ErrorBoundary />
-    },
-    {
-      path:"/signIn",
-      element:<Signin/>,
-      errorElement:<ErrorBoundary />
-    },
-    {
-      path: "*",
-      element: <ErrorBoundary />,
+      children: [
+        { path: "/", element: <Home /> },
+        { path: "/home", element: <Home /> },
+        { path: "/products", element: <Products /> },
+        { path: "/details/:id", element: <ProductDetails /> },
+        { path: "/search", element: <SearchResults /> },
+        { path: "/cart", element: <CartPage /> },
+        { path: "/electronics", element: <Eletronics /> },
+        { path: "/signUp", element: <Signup /> },
+        { path: "/signIn", element: <Signin /> },
+        { path: "*", element: <ErrorBoundary /> },
+      ],
     },
   ]);
 
-  return (
-    <div className="min-h-screen w-full max-h-screen overflow-y-auto">
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

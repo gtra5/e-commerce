@@ -17,6 +17,7 @@
     "framer-motion": "^12.23.12",
     "motion": "^12.23.22",
     "nuka-carousel": "^8.2.0",
+    "react-router-dom": "^7.9.3",
     "sneaks-api": "^1.2.3"
   },
   "devDependencies": {
