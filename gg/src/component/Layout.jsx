@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ScrollToTop from "./scrollToTop";
+import ScrollToTop from "./ScrollToTop";
 
 export default function Layout() {
   return (

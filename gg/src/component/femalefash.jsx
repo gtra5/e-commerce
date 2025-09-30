@@ -120,13 +120,13 @@ function FemaleFash() {
             </p>
           </div>
         </div>
-        <a
-          href="#"
+        <button
+          type="button"
+          onClick={() => navigate("/electronics?section=womens-dresses")}
           className="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all duration-200 font-medium text-sm sm:text-base mt-3 sm:mt-0"
         >
-          {" "}
-          See more{" "}
-        </a>
+          See more
+        </button>
       </div>
       <div className="relative bg-white px-0 py-0 h-fit-content lg:rounded-b-xl px-2 py-2 group/slider">
         {/* Left Arrow */}

@@ -238,7 +238,9 @@ function Electronics() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search); // Moved before useState
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(queryParams.get("category") || "all");
+  const [selectedCategory, setSelectedCategory] = useState(
+    queryParams.get("category") || "all"
+  );
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -264,10 +266,21 @@ function Electronics() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const categoryFromUrl = queryParams.get("category") || "all";
-    if (categoryFromUrl !== selectedCategory) {
+    const sectionFromUrl = queryParams.get("section");
+    if (
+      sectionFromUrl === "smartphones" ||
+      sectionFromUrl === "womens-dresses"||
+      sectionFromUrl === "skin-care"||
+      sectionFromUrl === "vehicle"
+    ) {
+      if (selectedCategory !== sectionFromUrl) {
+        setSelectedCategory(sectionFromUrl);
+        navigate(`/electronics?category=${sectionFromUrl}`, { replace: true });
+      }
+    } else if (categoryFromUrl !== selectedCategory) {
       setSelectedCategory(categoryFromUrl);
     }
-  }, [location.search]);
+  }, [location.search, selectedCategory, navigate]);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -847,7 +860,6 @@ function Electronics() {
                     product.price,
                     product.discountPercentage
                   );
-                 
 
                   return (
                     <div

@@ -6,7 +6,6 @@ import Phone from "../component/phone";
 import Skincare from "../component/skin-care";
 
 import KemetAd from "../component/KemetAd";
-import Fashion from "../component/fashion";
 import FemaleFash from "../component/femalefash";
 
 function Home() {

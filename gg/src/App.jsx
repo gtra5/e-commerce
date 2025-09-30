@@ -8,10 +8,11 @@ import Products from "./page/products";
 import ProductDetails from "./component/ProductDetails";
 import SearchResults from "./component/SearchResults";
 import CartPage from "./page/Cart";
-import Eletronics from "./page/eletronics";
+import Eletronics from "./page/cartgories";
 import Signup from "./page/signup";
 import Signin from "./page/signin";
 import Layout from "./component/Layout";
+import Profile from "./page/profile";
 
 // Enhanced Error Boundary Component
 function ErrorBoundary() {
@@ -121,6 +122,7 @@ function App() {
         { path: "/search", element: <SearchResults /> },
         { path: "/cart", element: <CartPage /> },
         { path: "/electronics", element: <Eletronics /> },
+        {path: "/profile", element: <Profile /> },
         { path: "/signUp", element: <Signup /> },
         { path: "/signIn", element: <Signin /> },
         { path: "*", element: <ErrorBoundary /> },

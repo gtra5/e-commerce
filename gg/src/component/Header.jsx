@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 import { auth, db } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { UserRoundCheck, Grid, CheckCircle } from "lucide-react";
+import { UserRoundCheck, Grid, CheckCircle, Clock, User, HelpCircle } from "lucide-react";
 import Subheader from "./Subheader";
 
 const CATEGORIES_API = "https://dummyjson.com/products/categories";
@@ -32,16 +32,10 @@ const searchSuggestions = {
   sports: ["fitness", "running", "yoga", "equipment", "clothing", "shoes"],
 };
 
-const ClockIcon = ({ className, strokeColor = "#f59e0b" }) => (
-  <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="10" stroke={strokeColor} strokeWidth="2" fill="#fff" />
-    <path d="M12 6v6l4 2" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 const Header = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,6 +44,7 @@ const Header = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
+  const [categoriesError, setCategoriesError] = useState("");
   const searchRef = useRef(null);
   const { cartCount = 0 } = useCart();
   const navigate = useNavigate();
@@ -68,10 +63,11 @@ const Header = () => {
     const fetchCategories = async () => {
       try {
         setLoadingCategories(true);
+        setCategoriesError("");
         const response = await fetch(CATEGORIES_API);
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Failed to fetch categories: ${response.status}`);
         }
 
         const data = await response.json();
@@ -83,6 +79,7 @@ const Header = () => {
         setCategories(formattedCategories);
       } catch (err) {
         console.error("Error fetching categories:", err);
+        setCategoriesError("Failed to load categories. Using default list.");
         setCategories([
           { name: "smartphones", slug: "smartphones" },
           { name: "laptops", slug: "laptops" },
@@ -113,11 +110,37 @@ const Header = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      try {
+        if (authUser) {
+          const userDoc = await getDoc(doc(db, "users", authUser.uid));
+          if (userDoc.exists()) {
+            setUser({
+              ...authUser,
+              name: userDoc.data().name || authUser.displayName || authUser.email.split("@")[0],
+            });
+          } else {
+            setUser({
+              ...authUser,
+              name: authUser.displayName || authUser.email.split("@")[0],
+            });
+          }
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setError("Failed to load user data. Please try again.");
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const formatCategoryName = (category) => {
-    let categoryName =
-      typeof category === "string"
-        ? category
-        : category.name || category.slug || String(category);
+    const categoryName = typeof category === "string" ? category : category.name || category.slug || "Unknown";
     return categoryName
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -194,10 +217,23 @@ const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      saveRecentSearch(searchQuery);
-      setShowSuggestions(false);
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    const trimmedQuery = searchQuery.trim();
+    if (!trimmedQuery) {
+      setError("Please enter a search term.");
+      return;
+    }
+    saveRecentSearch(trimmedQuery);
+    setShowSuggestions(false);
+    navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate("/signIn");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      setError("Failed to sign out. Please try again.");
     }
   };
 
@@ -214,33 +250,17 @@ const Header = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
-      try {
-        if (authUser) {
-          const userDoc = await getDoc(doc(db, "users", authUser.uid));
-          setUser({
-            ...authUser,
-            username: userDoc.exists() ? userDoc.data().username : null,
-          });
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   return (
     <header className="bg-white shadow-sm z-50">
+      {error && (
+        <div className="w-full bg-red-100 border border-red-400 text-red-700 px-4 py-2 text-sm text-center">
+          {error}
+        </div>
+      )}
       <div className="w-full bg-gray-100 text-xs text-gray-700 flex flex-col md:flex-row justify-between items-center px-2 md:px-4 py-2 space-y-1 md:space-y-0">
         <div className="flex items-center space-x-2">
-          <ClockIcon className="inline h-4 w-4 mr-1" />
-          <a href="#" className="hover:underline text-orange-500 font-medium">
+          <Clock className="inline h-4 w-4 mr-1 text-orange-500" />
+          <a href="/sell" className="hover:underline text-orange-500 font-medium">
             Sell on Travelstore
           </a>
         </div>
@@ -249,7 +269,7 @@ const Header = () => {
             <a className="text-gray-700 font-bold" href="/home">
               Travelstore
             </a>
-            <ClockIcon className="inline h-4 w-4" />
+            <Clock className="inline h-4 w-4 text-orange-500" />
           </span>
           <span>PAY</span>
           <span>DELIVERY</span>
@@ -265,13 +285,13 @@ const Header = () => {
                 Store
               </span>
             </a>
-            <ClockIcon className="ml-1 h-6 w-6" />
+            <Clock className="ml-1 h-6 w-6 text-orange-500" />
           </span>
           <div className="flex items-center space-x-3 md:hidden">
             <button
               className="flex items-center space-x-1 hover:text-blue-500 focus:outline-none"
               onClick={() => navigate("/cart")}
-              aria-label="View cart"
+              aria-label={`View cart with ${cartCount} items`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +358,8 @@ const Header = () => {
               }}
               placeholder="Search products, brands and categories"
               className="w-full px-4 py-2 md:py-3 border-t border-b border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base"
-              aria-label="Search products"
+              aria-label="Search products, brands, and categories"
+              required
             />
             <button
               type="submit"
@@ -360,6 +381,7 @@ const Header = () => {
                         key={index}
                         onClick={() => handleSuggestionClick(search)}
                         className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center gap-2"
+                        aria-label={`Search for ${search}`}
                       >
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path
@@ -385,6 +407,7 @@ const Header = () => {
                         key={index}
                         onClick={() => handleSuggestionClick(suggestion)}
                         className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center gap-2"
+                        aria-label={`Search for ${suggestion}`}
                       >
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path
@@ -410,6 +433,7 @@ const Header = () => {
                         key={index}
                         onClick={() => handleSuggestionClick(term)}
                         className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+                        aria-label={`Search for ${term}`}
                       >
                         {term}
                       </button>
@@ -430,21 +454,10 @@ const Header = () => {
                 setIsHelpOpen(false);
               }}
               aria-expanded={isAccountOpen}
-              aria-label={user?.username ? `Account for ${user.username}` : "Account"}
+              aria-label={user?.name ? `Account for ${user.name}` : "Account"}
             >
-              {user ? (
-                <UserRoundCheck />
-              ) : (
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              )}
-              <span>{user?.username || "Account"}</span>
+              {user ? <UserRoundCheck className="h-6 w-6" /> : <User className="h-6 w-6" />}
+              <span>{user?.name || "Account"}</span>
               <svg className="h-4 w-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
@@ -460,8 +473,9 @@ const Header = () => {
                       My Orders
                     </a>
                     <button
-                      onClick={() => auth.signOut()}
+                      onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      aria-label="Sign out"
                     >
                       Sign Out
                     </button>
@@ -472,7 +486,7 @@ const Header = () => {
                       Sign In
                     </a>
                     <a href="/signUp" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                      Register
+                      Sign Up
                     </a>
                   </>
                 )}
@@ -490,16 +504,7 @@ const Header = () => {
               aria-expanded={isHelpOpen}
               aria-label="Help"
             >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#fff" />
-                <path
-                  d="M12 16h.01M12 8a4 4 0 00-2 7.465"
-                  stroke="#374151"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <HelpCircle className="h-6 w-6" />
               <span>Help</span>
               <svg className="h-4 w-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -556,17 +561,10 @@ const Header = () => {
               className="flex items-center space-x-2 w-full hover:text-blue-500"
               onClick={() => setIsAccountOpen((v) => !v)}
               aria-expanded={isAccountOpen}
-              aria-label={user?.username ? `Account for ${user.username}` : "Account"}
+              aria-label={user?.name ? `Account for ${user.name}` : "Account"}
             >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span>{user?.username || "Account"}</span>
+              {user ? <UserRoundCheck className="h-6 w-6" /> : <User className="h-6 w-6" />}
+              <span>{user?.name || "Account"}</span>
             </button>
             {isAccountOpen && (
               <div className="w-full bg-gray-50 rounded shadow-inner py-2">
@@ -575,12 +573,13 @@ const Header = () => {
                     <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                       Profile
                     </a>
-                    <a href="/orders" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    <a href="/cart" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                       My Orders
                     </a>
                     <button
-                      onClick={() => auth.signOut()}
+                      onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      aria-label="Sign out"
                     >
                       Sign Out
                     </button>
@@ -591,7 +590,7 @@ const Header = () => {
                       Sign In
                     </a>
                     <a href="/signUp" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                      Register
+                      Sign Up
                     </a>
                   </>
                 )}
@@ -603,16 +602,7 @@ const Header = () => {
               aria-expanded={isHelpOpen}
               aria-label="Help"
             >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#fff" />
-                <path
-                  d="M12 16h.01M12 8a4 4 0 00-2 7.465"
-                  stroke="#374151"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <HelpCircle className="h-6 w-6" />
               <span>Help</span>
             </button>
             {isHelpOpen && (
@@ -637,7 +627,9 @@ const Header = () => {
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
                 )}
               </div>
-
+              {categoriesError && (
+                <div className="text-sm text-red-600 mb-2">{categoriesError}</div>
+              )}
               {!loadingCategories && categories.length > 0 && (
                 <div className="space-y-1 max-h-60 overflow-y-auto">
                   <button
@@ -647,13 +639,14 @@ const Header = () => {
                         ? "bg-blue-500 text-white font-semibold shadow-lg"
                         : "hover:bg-gray-100"
                     }`}
+                    aria-label="View all products"
                   >
                     <div className="flex items-center justify-between">
                       <span>All Products</span>
                       {selectedCategory === "all" && <CheckCircle className="w-4 h-4" />}
                     </div>
                   </button>
-                  {categories.map((category) => (
+                  {categories.slice(0, 10).map((category) => ( // Limit to 10 categories for mobile
                     <button
                       key={category.slug}
                       onClick={() => handleCategoryClick(category.slug)}
@@ -662,6 +655,7 @@ const Header = () => {
                           ? "bg-blue-500 text-white font-semibold shadow-lg"
                           : "hover:bg-gray-100"
                       }`}
+                      aria-label={`View ${formatCategoryName(category)} category`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="capitalize">{formatCategoryName(category)}</span>
@@ -671,7 +665,6 @@ const Header = () => {
                   ))}
                 </div>
               )}
-
               {!loadingCategories && categories.length === 0 && (
                 <p className="text-gray-500 text-sm">No categories available</p>
               )}

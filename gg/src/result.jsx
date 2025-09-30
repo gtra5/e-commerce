@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   return (
     <div className="w-full flex flex-col min-h-screen">
       <Header />
-      <main className="w-full flex-grow bg-gray-200 p-4 md:p-6 lg:p-9 xl:p-20">
+      <main className="w-full flex-grow bg-gray-200 p-0 md:p-6 lg:p-9 xl:p-20">
         {children}
       </main>
       <button

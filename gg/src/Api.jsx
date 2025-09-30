@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"
 
 const Mwatch = () => {
   const [watch, setWatch] = useState(null);
   const [error, setError] = useState(null);
-
+const navigate = useNavigate();
   // The correct API URL for men's watches category
   const API_URL = "https://dummyjson.com/products/category/mens-watches";
 
@@ -32,28 +33,13 @@ const Mwatch = () => {
     fetchMensWatch();
   }, []);
 
-  if (!watch && !error) {
-    return (
-      <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg shadow-sm min-h-[420px] md:min-h-[420px] lg:min-h-[420px] xl:min-h-[420px] 2xl:min-h-[420px] flex flex-col justify-center p-4 h-full">
-        return null;
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-md">
-          {error}
-        </div>
-      </div>
-    );
-  }
+  
+  
 
   if (!watch) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600">No men's watch found</div>
+        <div className="text-gray-600 text-center">No men's watch found</div>
       </div>
     );
   }
@@ -71,7 +57,9 @@ const Mwatch = () => {
         />
       </div>
       <div className="flex flex-row justify-between">
-        <button className="bg-black text-white hover:bg-gray-100 text-base px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg w-fit mx-auto md:mx-0">
+        <button className="bg-black text-white hover:bg-gray-100 text-base px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg w-fit mx-auto md:mx-0"
+        onClick={() => navigate(`/details/${watch.id}`)}
+        >
           Shop Now
         </button>
         <div className="text-2xl  font-Roboto font-bold text-[#F5F5F5]">
