@@ -162,7 +162,7 @@ function App() {
   ]);
 
   return (
-    <div className="min-h-screen w-full overflow-y-auto">
+    <div className="min-h-screen w-full max-h-screen overflow-y-auto">
       <RouterProvider router={router} />
     </div>
   );

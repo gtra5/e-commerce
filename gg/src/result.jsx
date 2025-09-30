@@ -1,5 +1,5 @@
 import Header from "./component/Header.jsx";
-import { ArrowUpFromDot } from 'lucide-react';
+import { ArrowUpFromDot } from "lucide-react";
 import Footer from "./component/Footer.jsx";
 
 const Layout = ({ children }) => {
@@ -7,21 +7,26 @@ const Layout = ({ children }) => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }
+    });
+  };
+
   return (
-    <div className="w-full flex flex-col justify-center  ">
+    <div className="w-full flex flex-col min-h-screen">
       <Header />
-      <section className="w-full h-fit  bg-gray-200 lg:p-9 xl:p-20 ">{children}</section>
+      <main className="w-full flex-grow bg-gray-200 p-4 md:p-6 lg:p-9 xl:p-20">
+        {children}
+      </main>
       <button
         onClick={scrollToTop}
-        className="fixed bottom-6 right-6 w-16 h-16 flex items-center justify-center border border-1 border-white bg-blue-500 hover:bg-blue-600 rounded-full font-normal text-xl shadow-lg text-white transition-colors duration-200 z-50"
+        className="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 border border-white rounded-full shadow-lg text-white transition-colors duration-200 z-50"
         aria-label="Scroll to top"
+        title="Back to top"
       >
-        <ArrowUpFromDot />
+        <ArrowUpFromDot size={24} />
       </button>
       <Footer />
     </div>
   );
 };
+
 export default Layout;
