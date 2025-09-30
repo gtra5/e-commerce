@@ -102,19 +102,19 @@ function Signin() {
         backgroundImage: `radial-gradient(circle 600px at 50% 50%, rgba(59,130,246,0.3), transparent)`,
       }}
     >
-      {error && (
-        <div className="w-full max-w-sm px-2 mb-2">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative text-sm" role="alert">
-            {error}
-          </div>
-        </div>
-      )}
       <div
-        className="bg-white w-full rounded-none md:w-[28rem] md:rounded-3xl shadow-lg flex flex-col justify-center items-center p-6 md:h-[35rem]"
+        className="bg-white w-full h-full rounded-none md:w-[28rem] md:rounded-3xl shadow-lg flex flex-col justify-center items-center p-6 md:h-[35rem]"
         style={{
           backgroundImage: `radial-gradient(circle 600px at 50% 50%, rgba(59,130,246,0.3), transparent)`,
         }}
       >
+         {error && (
+        <div className="w-full max-w-sm px-2 mb-2">
+          <div className="bg-red-100 fixed top-6 left-1/2 transform -translate-x-1/2  text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all" role="alert">
+            {error}
+          </div>
+        </div>
+      )}
         <div className="bg-white w-16 h-16 rounded-xl flex items-center justify-center">
           <LogIn size={30} strokeWidth={2.75} />
         </div>
