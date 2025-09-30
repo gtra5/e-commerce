@@ -122,7 +122,7 @@ function Slideproducts() {
         </div>
         <button
           type="button"
-          onClick={() => navigate("/electronics?section=vehicle")}
+          onClick={() => navigate("/electronics?category=vehicle")}
           className="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all duration-200 font-medium text-sm sm:text-base mt-3 sm:mt-0"
         >
           See more
