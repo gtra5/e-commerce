@@ -32,6 +32,5 @@ dataconnect/ – Data connector configurations and GraphQL schemas
 src/dataconnect-generated/ – Auto-generated code for data connectors
 This project demonstrates a full-stack approach to building scalable, cloud-native e-commerce solutions using modern web technologies.
 
-Let me know if you need further help!
 
-GPT-4.1 • 1x
+
